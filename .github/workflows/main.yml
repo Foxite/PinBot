@@ -13,9 +13,9 @@ jobs:
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@3.04
       with:
-        name: observances-bot
+        name: pin-bot
         context: .
-        dockerfile: ObservancesBot/Dockerfile
+        dockerfile: PinBot/Dockerfile
         registry: ${{ secrets.PUSH_REPO }}
         username: ${{ secrets.PUSH_USER }}
         password: ${{ secrets.PUSH_PASSWD }}
