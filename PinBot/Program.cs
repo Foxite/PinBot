@@ -1,4 +1,5 @@
 ﻿using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 string? pinRoleIdString = Environment.GetEnvironmentVariable("ROLE_ID");
@@ -18,10 +19,14 @@ async Task OnMessageReactionAdded(DiscordClient _, MessageReactionAddEventArgs a
 		return;
 	}
 
-	if (args.Emoji.Name == "📌" && (args.Guild == null || !pinRoleId.HasValue || (await args.Guild.GetMemberAsync(args.User.Id)).Roles.Any(role => role.Id == pinRoleId))) {
-		await args.Message.PinAsync();
-	} else if (args.Emoji.Name == "⛔" && args.Message.Author.Id == args.User.Id) {
-		await args.Message.UnpinAsync();
+	if (args.Emoji.Name == "📌") {
+		if (args.Guild == null || !pinRoleId.HasValue || (await args.Guild.GetMemberAsync(args.User.Id)).Roles.Any(role => role.Id == pinRoleId)) {
+			await args.Message.PinAsync();
+		}
+	} else if (args.Emoji.Name == "⛔") {
+		if (args.Message.Author.Id == args.User.Id) {
+			await args.Message.UnpinAsync();
+		}
 	}
 }
 
