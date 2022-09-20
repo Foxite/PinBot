@@ -21,7 +21,6 @@ async Task OnMessageReactionAdded(DiscordClient _, MessageReactionAddEventArgs a
 
 	DiscordMessage message = args.Message;
 	if (message.Author == null) {
-		Console.WriteLine("YEAH");
 		message = await args.Channel.GetMessageAsync(args.Message.Id);
 	}
 	
