@@ -19,13 +19,19 @@ async Task OnMessageReactionAdded(DiscordClient _, MessageReactionAddEventArgs a
 		return;
 	}
 
+	DiscordMessage message = args.Message;
+	if (message.Author == null) {
+		Console.WriteLine("YEAH");
+		message = await args.Channel.GetMessageAsync(args.Message.Id);
+	}
+	
 	if (args.Emoji.Name == "📌") {
 		if (args.Guild == null || !pinRoleId.HasValue || (await args.Guild.GetMemberAsync(args.User.Id)).Roles.Any(role => role.Id == pinRoleId)) {
-			await args.Message.PinAsync();
+			await message.PinAsync();
 		}
 	} else if (args.Emoji.Name == "⛔") {
-		if (args.Message.Author.Id == args.User.Id) {
-			await args.Message.UnpinAsync();
+		if (message.Author.Id == args.User.Id) {
+			await message.UnpinAsync();
 		}
 	}
 }
