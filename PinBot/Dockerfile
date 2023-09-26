@@ -15,4 +15,4 @@ RUN dotnet publish "PinBot.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PinBot.dll"]
+CMD ["/app/PinBot"]
